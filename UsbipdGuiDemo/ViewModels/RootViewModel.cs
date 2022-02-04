@@ -130,6 +130,10 @@ namespace UsbipdGuiDemo.ViewModels
 
         public void DetachDevices(string _busid)
         {
+            if(_busid == lastAttachedDevice)
+            {
+                lastAttachedDevice = null;
+            }
             var detachProcess = new Process
             {
                 StartInfo = new ProcessStartInfo
