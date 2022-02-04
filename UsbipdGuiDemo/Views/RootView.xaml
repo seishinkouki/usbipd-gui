@@ -12,9 +12,39 @@
            WindowStartupLocation="CenterScreen"
            ShowTitle="True"
            Height="450" 
-           Width="687" Closing="Window_Closing">
+           Width="687">
 
-    <DataGrid ItemsSource="{Binding DEVICE}" AutoGenerateColumns="False" Margin="0,0,0,0" IsReadOnly="True">
+    <DataGrid ItemsSource="{Binding DEVICE}" AutoGenerateColumns="False" Margin="0,0,0,0" IsReadOnly="True" CanUserSortColumns="False" CanUserResizeColumns="False">
+        <DataGrid.RowStyle>
+            <Style TargetType="DataGridRow" BasedOn="{StaticResource DataGridRowStyle}">
+                <Setter Property="Background" Value="{DynamicResource RegionBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource RegionBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="Background" Value="{DynamicResource RegionBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </DataGrid.RowStyle>
+        <DataGrid.CellStyle>
+            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected" Value="true"/>
+                            <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="Transparent"/>
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+        </DataGrid.CellStyle>
         <DataGrid.Columns>
             <DataGridTextColumn Header="BUSID" Binding="{Binding BUSID}"></DataGridTextColumn>
             <DataGridTextColumn Header="DEVICE DESCRIPTION" Binding="{Binding DEVICE_NAME}"></DataGridTextColumn>

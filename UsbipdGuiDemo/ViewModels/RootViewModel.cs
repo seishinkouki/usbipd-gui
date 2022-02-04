@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using System;
 
 using MessageBox = HandyControl.Controls.MessageBox;
+using System.Threading.Tasks;
 
 namespace UsbipdGuiDemo.ViewModels
 {
@@ -33,47 +34,8 @@ namespace UsbipdGuiDemo.ViewModels
             set { SetAndNotify(ref _device, value); }
         }
 
-        private string _busid;
-        public string BUSID
-        {
-            get { return _busid; }
-            set
-            {
-                if(value != _busid)
-                {
-                    SetAndNotify(ref _busid, value);
-                }
-            }
-        }
-
-        private string _device_name;
-        public string DEVICE_NAME
-        {
-            get { return _device_name; }
-            set
-            {
-                if(value != _device_name)
-                {
-                    SetAndNotify(ref _device_name, value);
-                }           
-            }
-        }
-
-        private string _state;
-        public string STATE
-        {
-            get { return _state; }
-            set
-            {
-                if(value!= _state)
-                {
-                    SetAndNotify(ref _state, value);
-                }
-            }
-        }
         public void ListDevices()
         {
-            DEVICE.Clear();
             var listProcess = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -95,24 +57,46 @@ namespace UsbipdGuiDemo.ViewModels
                 {
                     break;
                 }
+                bool exitloop = false;
+
                 if (line_item[0].Contains('-'))
                 {
+                    if (line_item[0] == lastAttachedDevice && line_item[line_item.Length - 1].Trim() == "Shared")
+                    {
+                        Task task = new Task(() => AttachDevices(line_item[0]));
+                        task.Start();
+                        continue;
+                    }
+
+                    foreach (var pre_device in DEVICE)
+                    {
+                        if (pre_device.BUSID == line_item[0])
+                        {
+                            if (pre_device.STATE != line_item[^1].Trim())
+                            {
+                                pre_device.STATE = line_item[^1].Trim();
+                            }
+                            exitloop = true;
+                            continue;
+                        }
+                    }
+                    if (exitloop)
+                    {
+                        continue;
+                    }
+
                     DEVICE.Add(new DeviceModel
                     {
                         BUSID = line_item[0],
                         DEVICE_NAME = line_item[1],
-                        STATE = line_item[line_item.Length - 1].Trim()
+                        STATE = line_item[^1].Trim()
                     });
-                    if(line_item[0] == lastAttachedDevice&& line_item[line_item.Length - 1].Trim() == "Shared")
-                    {
-                        AttachDevices(line_item[0]);
-                    }
                 }
             }
 
         }
 
-        public void AttachDevices(string _busid)
+        public static void AttachDevices(string _busid)
         {
             var attachProcess = new Process
             {
@@ -150,16 +134,25 @@ namespace UsbipdGuiDemo.ViewModels
 
         public RootViewModel()
         {
+
             ListDevices();
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Tick += (s, e) =>
-            {
-                
-                ListDevices();
-            };
+            timer.Tick += DispatcherTimer_Tick;
             timer.Interval = TimeSpan.FromMilliseconds(3000);
             timer.Start();
         }
+
+        public void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Task.Factory.StartNew(AsynchronousRefresh);
+        }
+
+        public void AsynchronousRefresh()
+        {
+            Task task = new Task(() => ListDevices());
+            task.Start();
+        }
+
         public void DoConnect(object _device)
         {
             DeviceModel vm = _device as DeviceModel;
