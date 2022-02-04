@@ -1,0 +1,45 @@
+﻿<hc:Window x:Class="UsbipdGuiDemo.Views.RootView"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:viewModels="clr-namespace:UsbipdGuiDemo.ViewModels"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
+           xmlns:s="https://github.com/canton7/Stylet"
+           mc:Ignorable="d"
+           d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
+           Title="{Binding Title}" 
+           WindowStartupLocation="CenterScreen"
+           ShowTitle="True"
+           Height="450" 
+           Width="687" Closing="Window_Closing">
+
+    <DataGrid ItemsSource="{Binding DEVICE}" AutoGenerateColumns="False" Margin="0,0,0,0" IsReadOnly="True">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="BUSID" Binding="{Binding BUSID}"></DataGridTextColumn>
+            <DataGridTextColumn Header="DEVICE DESCRIPTION" Binding="{Binding DEVICE_NAME}"></DataGridTextColumn>
+            <DataGridTextColumn Header="STATE" Binding="{Binding STATE}"></DataGridTextColumn>
+            <DataGridTemplateColumn Header=" ">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Margin="0,0,0,0" Width="100" Command="{s:Action DoConnect}" CommandParameter="{Binding}">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource ButtonDanger}" TargetType="Button">
+                                    <Setter Property="Background" Value="#db3340"></Setter>
+                                    <Setter Property="Content" Value="CONNECT"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding STATE}" Value="Attached">
+                                            <Setter Property="Background" Value="#2db84d"/>
+                                            <Setter Property="Content" Value="DISCONNECT"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+
+</hc:Window>
