@@ -27,5 +27,11 @@ namespace UsbipdGuiDemo.Models
             get { return _STATE; }
             set { SetAndNotify(ref _STATE, value); }
         }
+        private bool _IsExits;
+        public bool IsExits
+        {
+            get { return _IsExits; }
+            set { SetAndNotify(ref _IsExits, value); }
+        }
     }
 }

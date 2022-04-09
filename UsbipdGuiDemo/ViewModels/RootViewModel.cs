@@ -7,6 +7,7 @@ using System;
 
 using MessageBox = HandyControl.Controls.MessageBox;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace UsbipdGuiDemo.ViewModels
 {
@@ -49,15 +50,20 @@ namespace UsbipdGuiDemo.ViewModels
                 }
             };
             listProcess.Start();
+            foreach(var device in _device)
+            {
+                device.IsExits = false;
+            }
+
             while (!listProcess.StandardOutput.EndOfStream)
             {
+                
                 string line = listProcess.StandardOutput.ReadLine();
                 var line_item = line.Split("    ");
                 if (line.Contains("GUID"))
                 {
                     break;
                 }
-                bool exitloop = false;
 
                 if (line_item[0].Contains('-'))
                 {
@@ -68,32 +74,30 @@ namespace UsbipdGuiDemo.ViewModels
                         continue;
                     }
 
-                    foreach (var pre_device in DEVICE)
+                    if (!DEVICE.Any(device => device.BUSID == line_item[0]))
                     {
-                        if (pre_device.BUSID == line_item[0])
+                        DEVICE.Add(new DeviceModel
                         {
-                            if (pre_device.STATE != line_item[^1].Trim())
-                            {
-                                pre_device.STATE = line_item[^1].Trim();
-                            }
-                            exitloop = true;
-                            continue;
+                            BUSID = line_item[0],
+                            DEVICE_NAME = line_item[1],
+                            STATE = line_item[^1].Trim(),
+                            IsExits = true
+                        });
+                    }
+                    else
+                    {
+                        var device = DEVICE.FirstOrDefault(device => device.BUSID == line_item[0]);
+                        if (device != null)
+                        {
+                            device.DEVICE_NAME = line_item[1];
+                            device.STATE = line_item[^1].Trim();
+                            device.IsExits = true;
                         }
-                    }
-                    if (exitloop)
-                    {
-                        continue;
-                    }
 
-                    DEVICE.Add(new DeviceModel
-                    {
-                        BUSID = line_item[0],
-                        DEVICE_NAME = line_item[1],
-                        STATE = line_item[^1].Trim()
-                    });
+                    }
                 }
             }
-
+            DEVICE.Where(l => l.IsExits == false).ToList().ForEach(i => DEVICE.Remove(i));
         }
 
         public static void AttachDevices(string _busid)
