@@ -79,7 +79,8 @@ namespace UsbipdGuiDemo.ViewModels
                         DEVICE.Add(new DeviceModel
                         {
                             BUSID = line_item[0],
-                            DEVICE_NAME = line_item[1],
+                            VIDPID = line_item[1].Split("  ")[0],
+                            DEVICE_NAME = line_item[1].Split("  ")[1],
                             STATE = line_item[^1].Trim(),
                             IsExits = true
                         });
@@ -89,7 +90,8 @@ namespace UsbipdGuiDemo.ViewModels
                         var device = DEVICE.FirstOrDefault(device => device.BUSID == line_item[0]);
                         if (device != null)
                         {
-                            device.DEVICE_NAME = line_item[1];
+                            device.VIDPID = line_item[1].Split("  ")[0];
+                            device.DEVICE_NAME = line_item[1].Split("  ")[1];
                             device.STATE = line_item[^1].Trim();
                             device.IsExits = true;
                         }

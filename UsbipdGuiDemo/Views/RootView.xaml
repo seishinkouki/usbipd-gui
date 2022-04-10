@@ -11,8 +11,8 @@
            Title="{Binding Title}" 
            WindowStartupLocation="CenterScreen"
            ShowTitle="True"
-           Height="450" 
-           Width="687">
+           SizeToContent="WidthAndHeight"
+           ResizeMode="NoResize">
 
     <DataGrid ItemsSource="{Binding DEVICE}" AutoGenerateColumns="False" Margin="0,0,0,0" IsReadOnly="True" CanUserSortColumns="False" CanUserResizeColumns="False">
         <DataGrid.RowStyle>
@@ -52,7 +52,7 @@
             <DataGridTemplateColumn Header=" ">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <Button Margin="0,0,0,0" Width="100" Command="{s:Action DoConnect}" CommandParameter="{Binding}">
+                        <Button Margin="0,0,0,0" Width="98" Command="{s:Action DoConnect}" CommandParameter="{Binding}">
                             <Button.Style>
                                 <Style BasedOn="{StaticResource ButtonDanger}" TargetType="Button">
                                     <Setter Property="Background" Value="#db3340"></Setter>

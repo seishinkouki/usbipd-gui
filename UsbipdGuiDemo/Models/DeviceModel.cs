@@ -27,6 +27,12 @@ namespace UsbipdGuiDemo.Models
             get { return _STATE; }
             set { SetAndNotify(ref _STATE, value); }
         }
+        private string _VIDPID;
+        public string VIDPID
+        {
+            get { return _VIDPID; }
+            set { SetAndNotify(ref _VIDPID, value); }
+        }
         private bool _IsExits;
         public bool IsExits
         {
