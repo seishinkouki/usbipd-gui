@@ -8,6 +8,7 @@ using System;
 using MessageBox = HandyControl.Controls.MessageBox;
 using System.Threading.Tasks;
 using System.Linq;
+using HandyControl.Tools.Extension;
 
 namespace UsbipdGuiDemo.ViewModels
 {
@@ -50,21 +51,20 @@ namespace UsbipdGuiDemo.ViewModels
                 }
             };
             listProcess.Start();
-            foreach(var device in _device)
+            foreach (var device in _device)
             {
                 device.IsExits = false;
             }
 
             while (!listProcess.StandardOutput.EndOfStream)
             {
-                
+
                 string line = listProcess.StandardOutput.ReadLine();
-                var line_item = line.Split("    ");
-                if (line.Contains("GUID"))
+                var line_item = line.Split("  ", StringSplitOptions.RemoveEmptyEntries);
+                if (line.Contains("GUID") || line_item.Length < 1)
                 {
                     break;
                 }
-
                 if (line_item[0].Contains('-'))
                 {
                     if (line_item[0] == lastAttachedDevice && line_item[line_item.Length - 1].Trim() == "Shared")
@@ -78,10 +78,10 @@ namespace UsbipdGuiDemo.ViewModels
                     {
                         DEVICE.Add(new DeviceModel
                         {
-                            BUSID = line_item[0],
-                            VIDPID = line_item[1].Split("  ")[0],
-                            DEVICE_NAME = line_item[1].Split("  ")[1],
-                            STATE = line_item[^1].Trim(),
+                            BUSID = line_item[0].Trim(),
+                            VIDPID = line_item[1].Trim(),
+                            DEVICE_NAME = line_item[2].Trim(),
+                            STATE = line_item[3].Trim(),
                             IsExits = true
                         });
                     }
@@ -120,7 +120,7 @@ namespace UsbipdGuiDemo.ViewModels
 
         public void DetachDevices(string _busid)
         {
-            if(_busid == lastAttachedDevice)
+            if (_busid == lastAttachedDevice)
             {
                 lastAttachedDevice = null;
             }
@@ -176,7 +176,7 @@ namespace UsbipdGuiDemo.ViewModels
                     string caption = "device not shareable";
                     MessageBox.Warning(messageBoxText, caption);
                     break;
-            }            
+            }
         }
     }
 }
