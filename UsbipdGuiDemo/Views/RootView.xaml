@@ -5,7 +5,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:viewModels="clr-namespace:UsbipdGuiDemo.ViewModels"
            xmlns:hc="https://handyorg.github.io/handycontrol"
-           xmlns:s="https://github.com/canton7/Stylet"
+           xmlns:s="https://github.com/canton7/Stylet" xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
            mc:Ignorable="d"
            d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
            Title="{Binding Title}" 
@@ -17,7 +17,11 @@
         <CollectionViewSource 
         Source="{Binding DEVICE}" 
         IsLiveSortingRequested="True" 
-        x:Key="SortedDEVICE" />
+        x:Key="SortedDEVICE">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="BUSID" Direction="Ascending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
     </Window.Resources>
     <DataGrid ItemsSource="{Binding Source={StaticResource SortedDEVICE}}" 
               AutoGenerateColumns="False" 
