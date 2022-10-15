@@ -13,8 +13,18 @@
            ShowTitle="True"
            SizeToContent="WidthAndHeight"
            ResizeMode="NoResize">
-
-    <DataGrid ItemsSource="{Binding DEVICE}" AutoGenerateColumns="False" Margin="0,0,0,0" IsReadOnly="True" CanUserSortColumns="False" CanUserResizeColumns="False">
+    <Window.Resources>
+        <CollectionViewSource 
+        Source="{Binding DEVICE}" 
+        IsLiveSortingRequested="True" 
+        x:Key="SortedDEVICE" />
+    </Window.Resources>
+    <DataGrid ItemsSource="{Binding Source={StaticResource SortedDEVICE}}" 
+              AutoGenerateColumns="False" 
+              Margin="0,0,0,0" 
+              IsReadOnly="True" 
+              CanUserSortColumns="False" 
+              CanUserResizeColumns="False">
         <DataGrid.RowStyle>
             <Style TargetType="DataGridRow" BasedOn="{StaticResource DataGridRowStyle}">
                 <Setter Property="Background" Value="{DynamicResource RegionBrush}"/>

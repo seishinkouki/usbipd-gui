@@ -9,6 +9,7 @@ using MessageBox = HandyControl.Controls.MessageBox;
 using System.Threading.Tasks;
 using System.Linq;
 using HandyControl.Tools.Extension;
+using System.Reflection;
 
 namespace UsbipdGuiDemo.ViewModels
 {
@@ -90,9 +91,9 @@ namespace UsbipdGuiDemo.ViewModels
                         var device = DEVICE.FirstOrDefault(device => device.BUSID == line_item[0]);
                         if (device != null)
                         {
-                            device.VIDPID = line_item[1].Split("  ")[0];
-                            device.DEVICE_NAME = line_item[1].Split("  ")[1];
-                            device.STATE = line_item[^1].Trim();
+                            device.VIDPID = line_item[1].Trim();
+                            device.DEVICE_NAME = line_item[2].Trim();
+                            device.STATE = line_item[3].Trim();
                             device.IsExits = true;
                         }
 
