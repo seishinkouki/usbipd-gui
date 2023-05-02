@@ -12,15 +12,15 @@
            WindowStartupLocation="CenterScreen"
            ShowTitle="True"
            SizeToContent="WidthAndHeight"
-           ResizeMode="NoResize">
+           ResizeMode="CanMinimize">
     <Window.Resources>
         <CollectionViewSource 
-        Source="{Binding DEVICE}" 
-        IsLiveSortingRequested="True" 
-        x:Key="SortedDEVICE">
-            <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="BUSID" Direction="Ascending"/>
-            </CollectionViewSource.SortDescriptions>
+            Source="{Binding DEVICE}" 
+            IsLiveSortingRequested="True" 
+            x:Key="SortedDEVICE">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="BUSID" Direction="Ascending"/>
+                </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </Window.Resources>
     <DataGrid ItemsSource="{Binding Source={StaticResource SortedDEVICE}}" 

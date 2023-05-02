@@ -9,7 +9,8 @@
       "UsbipdGuiDemo/1.0.0.0": {
         "dependencies": {
           "HandyControls": "3.3.11",
-          "Stylet": "1.3.6"
+          "Stylet": "1.3.6",
+          "System.Management": "7.0.1"
         },
         "runtime": {
           "UsbipdGuiDemo.dll": {}
@@ -40,10 +41,37 @@
           }
         }
       },
+      "System.CodeDom/7.0.0": {
+        "runtime": {
+          "lib/net6.0/System.CodeDom.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
+          }
+        }
+      },
       "System.Drawing.Common/4.6.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.0.0",
           "Microsoft.Win32.SystemEvents": "4.6.0"
+        }
+      },
+      "System.Management/7.0.1": {
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/System.Management.dll": {
+            "assemblyVersion": "7.0.0.1",
+            "fileVersion": "7.0.523.17405"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/System.Management.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "7.0.0.1",
+            "fileVersion": "7.0.523.17405"
+          }
         }
       }
     }
@@ -82,12 +110,26 @@
       "path": "stylet/1.3.6",
       "hashPath": "stylet.1.3.6.nupkg.sha512"
     },
+    "System.CodeDom/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GLltyqEsE5/3IE+zYRP5sNa1l44qKl9v+bfdMcwg+M9qnQf47wK3H0SUR/T+3N4JEQXF3vV4CSuuo0rsg+nq2A==",
+      "path": "system.codedom/7.0.0",
+      "hashPath": "system.codedom.7.0.0.nupkg.sha512"
+    },
     "System.Drawing.Common/4.6.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-2A3spjjoPZnvpVh/sDTzd+0H8ZqTdr+hH/6obB8MMfG81EJ85PmxCKDBxhBVQiA25PliKAZ1sKogDcq9mSnFEA==",
       "path": "system.drawing.common/4.6.0",
       "hashPath": "system.drawing.common.4.6.0.nupkg.sha512"
+    },
+    "System.Management/7.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pHg4hGr/dn5wYdJ+kolMY4gkCIzFDRj/HFqoPq7e5h7OGii6BCBmS2/+ysC2SSoB5WvIDS29DMM5DowxxSY/oA==",
+      "path": "system.management/7.0.1",
+      "hashPath": "system.management.7.0.1.nupkg.sha512"
     }
   }
 }
