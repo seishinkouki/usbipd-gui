@@ -112,7 +112,7 @@ namespace UsbipdGuiDemo.ViewModels
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "usbipd",
-                    Arguments = "wsl attach --busid " + _busid,
+                    Arguments = "attach --busid " + _busid + " --wsl",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
@@ -132,7 +132,7 @@ namespace UsbipdGuiDemo.ViewModels
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "usbipd",
-                    Arguments = "wsl detach --busid " + _busid,
+                    Arguments = "detach --busid " + _busid,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,

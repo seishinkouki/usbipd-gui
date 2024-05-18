@@ -1,20 +1,21 @@
-﻿<Application x:Class="UsbipdGuiDemo.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:s="https://github.com/canton7/Stylet"
-             xmlns:hc="https://handyorg.github.io/handycontrol"
-             xmlns:local="clr-namespace:UsbipdGuiDemo">
-    
+﻿<Application
+    x:Class="UsbipdGuiDemo.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:UsbipdGuiDemo"
+    xmlns:s="https://github.com/canton7/Stylet">
+
     <Application.Resources>
         <s:ApplicationLoader>
             <s:ApplicationLoader.Bootstrapper>
-                <local:Bootstrapper/>
+                <local:Bootstrapper />
             </s:ApplicationLoader.Bootstrapper>
             <s:ApplicationLoader.MergedDictionaries>
-                <hc:ThemeResources RequestedTheme="Dark"/>
-                <hc:Theme/>
+                <hc:ThemeResources RequestedTheme="Dark" />
+                <hc:Theme />
             </s:ApplicationLoader.MergedDictionaries>
         </s:ApplicationLoader>
     </Application.Resources>
-    
+
 </Application>
